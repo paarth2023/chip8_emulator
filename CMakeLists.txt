@@ -20,6 +20,7 @@ target_include_directories(glad PUBLIC
 # CHIP-8 executable
 add_executable(chip8
     src/main.cpp
+    src/opengl_renderer.cpp
 )
 
 target_link_libraries(chip8 PRIVATE
