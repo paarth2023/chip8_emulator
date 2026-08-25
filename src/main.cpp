@@ -138,21 +138,46 @@ typedef struct chip8
         case 0x8000:
         {
             u8 lastDigit = opcode & 0x000F;
-            u8 Vx = registers[(opcode & 0x0F00) >> 8];
-            u8 Vy = registers[(opcode & 0x00F0) >> 4];
+            u8 *Vx = &registers[(opcode & 0x0F00) >> 8];
+            u8 *Vy = &registers[(opcode & 0x00F0) >> 4];
             switch (lastDigit)
             {
-            case 0:
-                Vx = Vy;
+            case 0x00:
+                *Vx = *Vy;
                 break;
-            case 1:
-                registers[(opcode & 0x0F00) >> 8] = Vx | Vy;
+            case 0x01:
+                *Vx = *Vx | *Vy;
                 break;
-            case 2:
-                registers[(opcode & 0x0F00) >> 8] = Vx & Vy;
+            case 0x02:
+                *Vx = *Vx & *Vy;
                 break;
-            case 3:
-                registers[(opcode & 0x0F00) >> 8] = Vx ^ Vy;
+            case 0x03:
+                *Vx = *Vx ^ *Vy;
+                break;
+            case 0x04:
+                u16 sumCarry = *Vx + *Vy;
+                u8 carry = sumCarry >> 256;
+                u8 sum = sumCarry & 0xFF;
+                registers[0xF] = carry;
+                *Vx = sum;
+                break;
+            case 0x05:
+                registers[0xF] = (*Vx >= *Vy);
+                *Vx = *Vx - *Vy;
+                break;
+            case 0x06:
+                registers[0xF] = *Vx & 1;
+                *Vx = *Vx >> 1;
+                break;
+            case 0x07:
+                registers[0xF] = (*Vy >= *Vx);
+                *Vx = *Vy - *Vx;
+                break;
+            case 0x0E:
+                registers[0xF] = *Vx & (0b10000000);
+                *Vx = *Vx << 1;
+                break;
+            default:
                 break;
             }
             break;
