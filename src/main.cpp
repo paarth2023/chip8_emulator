@@ -111,12 +111,52 @@ typedef struct chip8
             pc = (opcode & 0x0FFF);
             jumpFlag = true;
             break;
+        case 0x3000:
+            u8 Vx = registers[(opcode & 0x0F00) >> 8];
+            u8 kk = opcode & 0x00FF;
+            if (Vx == kk)
+                pc += 2;
+            break;
+        case 0x4000:
+            u8 Vx = registers[(opcode & 0x0F00) >> 8];
+            u8 kk = opcode & 0x00FF;
+            if (Vx != kk)
+                pc += 2;
+            break;
+        case 0x5000:
+            u8 Vx = registers[(opcode & 0x0F00) >> 8];
+            u8 Vy = registers[(opcode & 0x00F0) >> 4];
+            if (Vx == Vy)
+                pc += 2;
+            break;
         case 0x6000:
             registers[(opcode & 0x0F00) >> 8] = opcode & 0x00FF;
             break;
         case 0x7000:
             registers[(opcode & 0x0F00) >> 8] += opcode & 0x00FF;
             break;
+        case 0x8000:
+        {
+            u8 lastDigit = opcode & 0x000F;
+            u8 Vx = registers[(opcode & 0x0F00) >> 8];
+            u8 Vy = registers[(opcode & 0x00F0) >> 4];
+            switch (lastDigit)
+            {
+            case 0:
+                Vx = Vy;
+                break;
+            case 1:
+                registers[(opcode & 0x0F00) >> 8] = Vx | Vy;
+                break;
+            case 2:
+                registers[(opcode & 0x0F00) >> 8] = Vx & Vy;
+                break;
+            case 3:
+                registers[(opcode & 0x0F00) >> 8] = Vx ^ Vy;
+                break;
+            }
+            break;
+        }
         case 0xA000:
             iRegister = opcode & 0x0FFF;
             break;
