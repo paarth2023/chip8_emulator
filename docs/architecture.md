@@ -29,11 +29,7 @@ Pipeline used in the project for Emulation:
 
 ```mermaid
 graph TD
-A[Load Sprites in memory between 0x050-0x09F] --> 
-B[Load ROM in memory at 0x200] --> 
-C[Set the program counter to 0x200] -->
-D[Fetch (same as basic flow)] -->
-E[Decode & Execute]
+A[Load Sprites in memory] --> B[Load ROM in memory at 0x200] --> C[Set the program counter to 0x200] --> D[Fetch] --> E[Decode & Execute]
 ```
 
 I kept the Decode & Excecute step to be done together because chip-8 is a relatively simple emulator with 35 opcodes/instructions.
