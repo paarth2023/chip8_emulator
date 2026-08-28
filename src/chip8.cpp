@@ -124,7 +124,7 @@ void Chip8::decode() {
 
 		case 0x04: {
 			u16 sumCarry = *Vx + *Vy;
-			u8 carry = sumCarry >> 256;
+			u8 carry = (sumCarry >> 8) & 1;
 			u8 sum = sumCarry & 0xFF;
 
 			registers[0xF] = carry;
@@ -148,7 +148,7 @@ void Chip8::decode() {
 			break;
 
 		case 0x0E:
-			registers[0xF] = *Vx & (0b10000000);
+			registers[0xF] = (*Vx >> 7) & 1;
 			*Vx = *Vx << 1;
 			break;
 
@@ -267,6 +267,22 @@ void Chip8::decode() {
 			memory[iRegister] = (*Vx / 100);
 			memory[iRegister + 1] = (*Vx / 10) % 10;
 			memory[iRegister + 2] = *Vx % 10;
+			break;
+		}
+		case 0x55: {
+			u8 x = 0;
+			for (u8* start = &registers[0]; start <= Vx; start++) {
+				memory[iRegister + x] = *start;
+				x++;
+			}
+			break;
+		}
+		case 0x65: {
+			u8 x = 0;
+			for (u8* start = &registers[0]; start <= Vx; start++) {
+				*start = memory[iRegister + x];
+				x++;
+			}
 			break;
 		}
 		default:
