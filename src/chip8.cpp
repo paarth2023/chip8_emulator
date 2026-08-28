@@ -35,6 +35,10 @@ void Chip8::loadRom(const std::string& fileName) {
 	}
 }
 
+void Chip8::handler(u8 key, u8 state) {
+	keys[key] = state;
+}
+
 void Chip8::fetch() {
 	opcode = (memory[pc] << 8) | memory[pc + 1];
 }

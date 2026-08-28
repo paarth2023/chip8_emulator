@@ -224,6 +224,11 @@ void OpenGLRenderer::framebufferSizeCallback(GLFWwindow*, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+// non ai part
 void OpenGLRenderer::setKeyCallback(GLFWkeyfun callback) {
 	glfwSetKeyCallback(window, callback);
+}
+
+void OpenGLRenderer::setUserPointer(void* ptr) {
+	glfwSetWindowUserPointer(window, ptr);
 }

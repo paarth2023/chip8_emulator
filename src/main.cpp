@@ -37,9 +37,9 @@ int main() {
 		return -1;
 
 	Chip8 emulator{};
-	keyboard* input = new keyboard();
+	renderer.setUserPointer(&emulator);
 	std::cout << "Callback was set\n";
-	renderer.setKeyCallback(input->keyCallback);
+	renderer.setKeyCallback(keyboard::keyCallback);
 	std::cout << "After the callback\n";
 
 	emulator.setFont(font);

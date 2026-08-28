@@ -33,4 +33,5 @@ struct Chip8 {
 	void loadRom(const std::string& fileName);
 	void fetch();
 	void decode();
+	void handler(u8 key, u8 state);
 };
