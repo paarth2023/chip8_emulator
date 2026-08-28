@@ -23,6 +23,8 @@ add_executable(chip8
     src/opengl_renderer.cpp
     src/chip8.h
     src/chip8.cpp
+    src/keyboard.h
+    src/keyboard.cpp
 )
 
 target_link_libraries(chip8 PRIVATE

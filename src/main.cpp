@@ -5,6 +5,7 @@
 #include <ios>
 #include <iostream>
 #include "chip8.h"
+#include "keyboard.h"
 
 #define u8 uint8_t
 #define u16 uint16_t
@@ -36,6 +37,10 @@ int main() {
 		return -1;
 
 	Chip8 emulator{};
+	keyboard* input = new keyboard();
+	std::cout << "Callback was set\n";
+	renderer.setKeyCallback(input->keyCallback);
+	std::cout << "After the callback\n";
 
 	emulator.setFont(font);
 	emulator.loadRom("IBM Logo.ch8");
