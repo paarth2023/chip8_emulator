@@ -45,7 +45,7 @@ void Chip8::fetch() {
 
 
 void Chip8::decode() {
-	jumpFlag = false;
+	mode = normal;
 
 	switch (opcode & 0xF000) {
 	case 0x0000:
@@ -59,7 +59,7 @@ void Chip8::decode() {
 
 	case 0x1000:
 		pc = (opcode & 0x0FFF);
-		jumpFlag = true;
+		mode = jump;
 		break;
 
 	case 0x3000: {
@@ -175,7 +175,7 @@ void Chip8::decode() {
 
 	case 0xB000:
 		pc = (opcode & 0x0FFF) + registers[0];
-		jumpFlag = true;
+		mode = jump;
 		break;
 
 	case 0xD000: {
@@ -239,6 +239,36 @@ void Chip8::decode() {
 			*Vx = delay;
 			break;
 		}
+		case 0x0A: {
+			mode = pressedKey;
+			if (keys[lastKey]) {
+				*Vx = lastKey;
+				mode = normal;
+			}
+			break;
+		}
+		case 0x15: {
+			delay = *Vx;
+			break;
+		}
+		case 0x18: {
+			sound = *Vx;
+			break;
+		}
+		case 0x1E: {
+			iRegister += *Vx;
+			break;
+		}
+		case 0x29: {
+			iRegister = 0x050 + (*Vx * 5);
+			break;
+		}
+		case 0x33: {
+			memory[iRegister] = (*Vx / 100);
+			memory[iRegister + 1] = (*Vx / 10) % 10;
+			memory[iRegister + 2] = *Vx % 10;
+			break;
+		}
 		default:
 			break;
 		}
@@ -248,6 +278,6 @@ void Chip8::decode() {
 		break;
 	}
 
-	if (!jumpFlag)
+	if (mode == normal)
 		pc += 2;
 }

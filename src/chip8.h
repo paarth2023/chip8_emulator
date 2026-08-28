@@ -7,6 +7,8 @@
 using u8 = uint8_t;
 using u16 = uint16_t;
 
+typedef enum { pressedKey, jump, normal } MODE;
+
 struct Chip8 {
 	// emulated structures;
 	u8 memory[4096];
@@ -23,6 +25,10 @@ struct Chip8 {
 	u8 display[64 * 32];
 	// Opcode
 	u16 opcode;
+	// mode
+	MODE mode;
+	// last key pressed
+	u8 lastKey;
 
 	bool jumpFlag;
 	int romSize;
