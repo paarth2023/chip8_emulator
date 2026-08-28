@@ -21,6 +21,8 @@ target_include_directories(glad PUBLIC
 add_executable(chip8
     src/main.cpp
     src/opengl_renderer.cpp
+    src/chip8.h
+    src/chip8.cpp
 )
 
 target_link_libraries(chip8 PRIVATE

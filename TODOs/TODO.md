@@ -14,3 +14,7 @@
 Take as much time you need for this as these are the most important TODOs
 
 - [ ] Add illustration and explanation of `DXYN` opcode to `docs/opcodes.md`
+
+## 28-8-26
+
+- [ ] Get started with creating callback for input
