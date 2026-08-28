@@ -231,6 +231,18 @@ void Chip8::decode() {
 		break;
 	}
 
+	case 0xF000: {
+		u8* Vx = &registers[(opcode & 0x0F00) >> 8];
+		u8 lastBits = opcode & 0x00FF;
+		switch (lastBits) {
+		case 0x07: {
+			*Vx = delay;
+			break;
+		}
+		default:
+			break;
+		}
+	}
 
 	default:
 		break;
