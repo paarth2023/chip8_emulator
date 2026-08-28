@@ -28,26 +28,24 @@ u8 font[] = {
 };
 
 typedef struct chip8 {
+	// emulated structures;
 	u8 memory[4096];
 	u16 stack[16];
 	u8 registers[16];
-
+	u8 keys[16];
 	// Special registers
 	u16 iRegister;
 	u16 pc;
 	u8 delay;
 	u8 sound;
 	u8 sPointer;
-
-	int romSize;
-
 	// Display
 	u8 display[64 * 32];
-
 	// Opcode
 	u16 opcode;
 
 	bool jumpFlag;
+	int romSize;
 
 	void init() {
 		pc = 0x200;
