@@ -219,6 +219,19 @@ void Chip8::decode() {
 		break;
 	}
 
+	case 0xE000: {
+		u8* Vx = &registers[(opcode & 0x0F00) >> 8];
+		u8 lastBits = opcode & 0x00FF;
+		if (lastBits == 0x9E) {
+			if (keys[*Vx]) pc += 2;
+		}
+		if (lastBits == 0xA1) {
+			if (!keys[*Vx]) pc += 2;
+		}
+		break;
+	}
+
+
 	default:
 		break;
 	}
