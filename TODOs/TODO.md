@@ -17,4 +17,9 @@ Take as much time you need for this as these are the most important TODOs
 
 ## 28-8-26
 
-- [ ] Get started with creating callback for input
+- [X] Get started with creating callback for input
+
+## 29-8-26
+
+- [ ] Start with time accumulation for delay and sound timers 
+- [ ] Start with ROM testing

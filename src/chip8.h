@@ -30,7 +30,6 @@ struct Chip8 {
 	// last key pressed
 	u8 lastKey;
 
-	bool jumpFlag;
 	int romSize;
 
 	void init();

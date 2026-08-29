@@ -2,6 +2,7 @@
 
 void Chip8::init() {
 	pc = 0x200;
+	sPointer = 0;
 }
 
 void Chip8::setFont(u8 font[]) {
@@ -52,12 +53,24 @@ void Chip8::decode() {
 		if (opcode == 0x00E0)
 			clearScreen();
 
+		if (opcode == 0x00EE) {
+			pc = stack[--sPointer];
+			mode = normal;
+		}
+
 		if (opcode == 0x0000)
 			return;
 
 		break;
 
 	case 0x1000:
+		pc = (opcode & 0x0FFF);
+		mode = jump;
+		break;
+
+	case 0x2000:
+		stack[sPointer] = pc;
+		sPointer++;
 		pc = (opcode & 0x0FFF);
 		mode = jump;
 		break;
@@ -288,6 +301,7 @@ void Chip8::decode() {
 		default:
 			break;
 		}
+		break;
 	}
 
 	default:
