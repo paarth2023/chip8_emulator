@@ -22,6 +22,7 @@ public:
 	// non ai feature
 	void setKeyCallback(GLFWkeyfun callback);
 	void setUserPointer(void* ptr);
+	float getTime();
 
 private:
 	void release();

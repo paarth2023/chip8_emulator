@@ -44,6 +44,10 @@ void Chip8::fetch() {
 	opcode = (memory[pc] << 8) | memory[pc + 1];
 }
 
+void Chip8::updateTimers() {
+	if (delay > 0) delay--;
+	if (sound > 0) sound--;
+}
 
 void Chip8::decode() {
 	mode = normal;
@@ -191,6 +195,12 @@ void Chip8::decode() {
 		mode = jump;
 		break;
 
+	case 0xC000: {
+		u8* Vx = &registers[(opcode & 0x0F00) >> 8];
+		*Vx = distribution(generator) & (opcode & 0x00FF);
+		break;
+	}
+
 	case 0xD000: {
 		// DXYN
 		auto X = (opcode & 0x0F00) >> 8;
@@ -253,10 +263,13 @@ void Chip8::decode() {
 			break;
 		}
 		case 0x0A: {
-			mode = pressedKey;
-			if (keys[lastKey]) {
+			if (keyPressed) {
 				*Vx = lastKey;
+				keyPressed = false;
 				mode = normal;
+			}
+			else {
+				mode = waitForKey;
 			}
 			break;
 		}

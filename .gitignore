@@ -4,3 +4,5 @@ external/glfw-3.5.1/
 Fishie \[Hap, 2005\].ch8
 IBM Logo.ch8
 .clang-format
+*.ch8
+testRoms/

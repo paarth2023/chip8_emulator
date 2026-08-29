@@ -232,3 +232,7 @@ void OpenGLRenderer::setKeyCallback(GLFWkeyfun callback) {
 void OpenGLRenderer::setUserPointer(void* ptr) {
 	glfwSetWindowUserPointer(window, ptr);
 }
+
+float OpenGLRenderer::getTime() {
+	return glfwGetTime();
+}

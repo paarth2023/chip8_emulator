@@ -21,5 +21,11 @@ Take as much time you need for this as these are the most important TODOs
 
 ## 29-8-26
 
-- [ ] Start with time accumulation for delay and sound timers 
-- [ ] Start with ROM testing
+- [X] Start with time accumulation for delay and sound timers 
+- [X] Start with ROM testing
+
+## Rest of the TODOS
+
+- [ ] Documentation (Well written README with videos and photos)
+- [ ] Illustration onf the draw function
+- [ ] Explanation of keyboard handling and other CPU systems.

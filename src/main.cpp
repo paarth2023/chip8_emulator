@@ -4,6 +4,7 @@
 #include <fstream>
 #include <ios>
 #include <iostream>
+#include <string>
 #include "chip8.h"
 #include "keyboard.h"
 
@@ -31,7 +32,7 @@ u8 font[] = {
 
 
 int main() {
-	OpenGLRenderer renderer(64, 32, 640, 320, "chip-8 emulator");
+	OpenGLRenderer renderer(64, 32, 800, 600, "chip-8 emulator");
 
 	if (!renderer.initialize())
 		return -1;
@@ -43,13 +44,27 @@ int main() {
 	std::cout << "After the callback\n";
 
 	emulator.setFont(font);
-	emulator.loadRom("IBM Logo.ch8");
+	std::string fileName;
+	std::cout << "Enter file name: \n";
+	std::getline(std::cin, fileName);
+	emulator.loadRom(fileName);
 	emulator.init();
 
+	float previous = renderer.getTime();
+	float accumulator = 0.0f;
+
 	while (!renderer.shouldClose()) {
+		float currTime = renderer.getTime();
+		accumulator += currTime - previous;
+		previous = currTime;
 		// Fetch
 		emulator.fetch();
 		emulator.decode();
+
+		while (accumulator >= 1.0f / 60.0f) {
+			emulator.updateTimers();
+			accumulator -= 1.0f / 60.0f;
+		}
 
 		//opengl render part
 		renderer.render(emulator.display);
