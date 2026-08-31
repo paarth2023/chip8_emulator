@@ -28,4 +28,5 @@ Take as much time you need for this as these are the most important TODOs
 
 - [ ] Documentation (Well written README with videos and photos)
 - [ ] Illustration onf the draw function
-- [ ] Explanation of keyboard handling and other CPU systems.
+- [X] Explanation of keyboard handling and other CPU systems.
+- [ ] Creat videos and refine documentation a little bit.
